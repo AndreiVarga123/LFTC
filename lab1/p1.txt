@@ -1,0 +1,13 @@
+inceput
+
+intreg a,res=1;
+scanam(a);
+
+cat_timp(a<=2){
+	res *= a;
+	a--;	
+}
+
+printam(res);
+
+final

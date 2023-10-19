@@ -1,0 +1,15 @@
+inceput
+
+intreg a,b;
+scanam(a);
+scanam(b);
+
+cat_timp(b){
+	rest = a%b;
+	a = b;
+	b = rest;
+}
+
+printam(a)
+
+final

@@ -1,0 +1,19 @@
+inceput
+
+intreg n,a;
+lista_intreg l;
+
+scanam(n);
+pentru(intreg i=0; i<n; i++){
+	scanam(a);
+	l += a;
+}
+
+intreg m = l[0];
+pentru(intreg i=1; i<n; i++)
+	daca(m < l[i])
+		m = l[i];
+
+printam(m)
+
+final
