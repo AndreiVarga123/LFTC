@@ -1,0 +1,25 @@
+<type> ::= intreg | sfoara
+<array type> ::= lista_<type>
+
+<program> ::= inceput <stmt list> sfarsit
+
+<stmt list> ::= <stmt> | <stmt><stmt list>
+<stmt> ::= <declaration stmt; | <assignment stmt>; | <if stmt>; | <for stmt>; | <while stmt>; | <read stmt>; | <write stmt>;
+<declaration stmt> ::= <type> <identifier> | <array type> <identifier>
+<assignment stmt> ::= <identifier> = <expr>
+<if stmt> ::= daca(<condition list>){ <stmt list> }
+<for stmt> ::= pentru(<assignment stmt> | <condition list> | <assignment stmt>){ <stmt list> }
+<while stmt> ::= cat_timp(<condition list>){ <stmt list> }
+<read stmt> ::= citeste(<identifier>)
+<print stmt> ::= scrie(<value>)
+
+<value> ::= <int value> | <string value>
+<int value> ::= <integer> | <identifier>
+<string value> ::= <string> | <identfier>
+<expr> ::= <int expr> | <string expr>
+<int expr> ::= <int value> | <int value> <arithmetic operator> <int expr> | <int value> <arithmetic operator> (<int expr>) 
+<arithmetic operator> ::= + | - | * | / | %
+<string expr> ::= <string value> | <string value> + <string expr>  
+<condition list> ::= <condition> | <condition> || <condition_list> | <condition> && <condition list>
+<condition> ::= <expr> <boolean operator> <expr> | (<expr> <boolean operator> <expr>)
+<boolean operator> ::= < | > | <= | >= | == | !=
