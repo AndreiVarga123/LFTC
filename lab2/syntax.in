@@ -5,7 +5,8 @@
 
 <stmt list> ::= <stmt> | <stmt><stmt list>
 <stmt> ::= <declaration stmt; | <assignment stmt>; | <if stmt>; | <for stmt>; | <while stmt>; | <read stmt>; | <write stmt>;
-<declaration stmt> ::= <type> <identifier> | <array type> <identifier>
+<declaration stmt> ::= <type> <identifier> | <array type> <identifier> | <type> <identifier list> | <array type> <identifier list>
+<identifier list> ::= <identifier> | <identifier>, <identifer list>
 <assignment stmt> ::= <identifier> = <expr>
 <if stmt> ::= daca(<condition list>){ <stmt list> }
 <for stmt> ::= pentru(<assignment stmt> | <condition list> | <assignment stmt>){ <stmt list> }
@@ -17,7 +18,7 @@
 <int value> ::= <integer> | <identifier>
 <string value> ::= <string> | <identfier>
 <expr> ::= <int expr> | <string expr>
-<int expr> ::= <int value> | <int value> <arithmetic operator> <int expr> | <int value> <arithmetic operator> (<int expr>) 
+<int expr> ::= <int value> | <int value> <arithmetic operator> <int expr> | <int value> <arithmetic operator> (<int expr>) | (<int expr>) <arithmetic operator> <int value>
 <arithmetic operator> ::= + | - | * | / | %
 <string expr> ::= <string value> | <string value> + <string expr>  
 <condition list> ::= <condition> | <condition> || <condition_list> | <condition> && <condition list>
