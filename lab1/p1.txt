@@ -1,6 +1,7 @@
 inceput
 
-intreg a,res=1;
+intreg a,res;
+res = 1;
 scanam(a);
 
 cat_timp(a<=2){
@@ -10,4 +11,4 @@ cat_timp(a<=2){
 
 printam(res);
 
-final
+sfarsit
