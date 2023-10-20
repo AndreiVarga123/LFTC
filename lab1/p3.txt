@@ -18,4 +18,4 @@ pentru(i=1; i<n; i++)
 
 printam(m)
 
-final
+sfarsit
