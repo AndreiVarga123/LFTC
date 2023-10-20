@@ -12,4 +12,4 @@ cat_timp(b){
 
 printam(a)
 
-final
+sfarsit
