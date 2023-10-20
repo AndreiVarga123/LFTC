@@ -5,14 +5,14 @@ lista_intreg l;
 intreg i;
 
 scanam(n);
-pentru(intreg i=0; i<n; i++){
+pentru(i=0; i<n; i = i + 1){
 	scanam(a);
 	l = l + a;
 }
 
 intreg m;
 m = l[0];
-pentru(i=1; i<n; i++)
+pentru(i=1; i<n; i = i + 1)
 	daca(m < l[i])
 		m = l[i];
 
