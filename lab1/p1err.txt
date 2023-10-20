@@ -4,10 +4,10 @@ int a;
 res=1;
 scanam(a);
 
-cat_timp(a<=2)<
-	res *= a;
-	a--;	
->
+cat_timp(a<=2)#
+	res = res - a;
+	a = a - 1;	
+#
 
 printam(res);
 
