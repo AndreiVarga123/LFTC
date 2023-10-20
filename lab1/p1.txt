@@ -4,8 +4,8 @@ intreg a,res=1;
 scanam(a);
 
 cat_timp(a<=2){
-	res *= a;
-	a--;	
+	res = res * a;
+	a = a - 1;	
 }
 
 printam(res);
