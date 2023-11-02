@@ -1,5 +1,5 @@
 <type> ::= intreg | sfoara
-<array type> ::= lista_<type>
+<array type> ::= lista <type>
 
 <program> ::= inceput <stmt list> sfarsit
 
