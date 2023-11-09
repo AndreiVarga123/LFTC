@@ -1,0 +1,75 @@
+@startuml
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class node1 as "HashTable<K,V>" {
+   table: List<Node<K,V>>
+   capacity: int
+   size: int
+
+   hash(key:K): int
+   insert(key:K, value:V): V
+   get(key:K): V
+   remove(key:K): void
+   getSize(): int
+   isEmpty(): boolean
+   toString(): String
+}
+
+class node3 as "Pair<K,V>" {
+   first: K
+   second: V
+   getFirst(): K
+   getSecond(): V
+   equals(o:Object): boolean
+   toString(): String
+}
+
+class node0 as "Scanner" {
+   symTable: SymTable
+   separators: List<String>
+   operators: List<String>
+   keywords: List<String>
+   pif: List<Pair<String,Integer>>
+   programFile: File
+   line: String
+   index: int
+   currentLine: int
+
+   addTokens(tokenFile: File): void
+   skipSpaces(): void
+   stringConstantCase(): boolean
+   intConstantCase(): boolean
+   identifierCase(): boolean
+   tokenCase(): boolean
+   next(): void
+   scan(): void
+   changeProgram(file: File): void
+}
+
+class node2 as "SymTable" {
+   symTable: HashTable<String,Integer>
+
+   addSymbol(key:String): Integer
+   hasSymbol(key:String): boolean
+   getPosition(key:String): Integer
+   removeSymbol(key:String): void
+   getSize(): Integer
+   isEMpty(): Boolean
+   toString(): String
+}
+
+class node4 as "Node<K,V>"{
+    key: K
+    value: V
+    next: Node<K,V>
+
+    toString(): String
+}
+
+node1 o-- node2
+node2 *-- node0
+node3 o-- node0
+node1 "1  " *-- "0...*" node4
+@enduml

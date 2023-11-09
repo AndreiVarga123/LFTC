@@ -1,0 +1,15 @@
+inceput
+
+intreg a,b;
+citeste(a);
+citeste(b);
+
+cat_timp(b){
+	rest = a%b;
+	a = b;
+	b = rest;
+}
+
+scrie(a)
+
+sfarsit
