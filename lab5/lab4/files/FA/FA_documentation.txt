@@ -1,9 +1,0 @@
-<FA>::= States:'\n'<states>'\n'Alphabet:'\n'<alphabet>'\n'Initial State:'\n'<initial state>'\n'Final States:'\n'<final states>'\n'Transitions:'\n'<transitions>
-<states>::= <state>|<state> <states>
-<state>::= A|B|C|...|Z
-<alphabet>::= <char>|<char> <alphabet>
-<char>::=0|1|...|9|a|b|...|z|A|B|...|Z
-<initial state>::= <state>
-<final states>::= <states>
-<transitions>::= <transition>|<transition>'\n'<transitions>
-<transition>::= <state> <char> <state>
