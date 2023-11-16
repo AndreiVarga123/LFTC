@@ -1,0 +1,17 @@
+States:
+A B C D
+Alphabet:
+0 1
+Initial State:
+A
+Final States:
+C D
+Transitions:
+A 0 B
+A 1 C
+B 0 A
+B 1 C
+C 0 A
+C 1 D
+D 0 B
+D 1 C
