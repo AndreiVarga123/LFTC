@@ -5,6 +5,29 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
+    public static void mainMenu(){
+        System.out.println("1 - FA menu");
+        System.out.println("2 - Run programs");
+    }
+    public static void mainCases() throws IOException {
+        mainMenu();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Option:");
+        String option = scanner.nextLine();
+        if(option.equals("1")){
+            finiteAutomataCases();
+        }
+        else{
+            MyScanner myScanner = new MyScanner(new File("files/programs/p1.txt"));
+            myScanner.scan();
+            myScanner.changeProgram(new File("files/programs/p1err.txt"));
+            myScanner.scan();
+            myScanner.changeProgram(new File("files/programs/p2.txt"));
+            myScanner.scan();
+            myScanner.changeProgram(new File("files/programs/p3.txt"));
+            myScanner.scan();
+        }
+    }
     public static void printMenu(){
         System.out.println("1 - Display the set of states");
         System.out.println("2 - Display the alphabet");
@@ -59,14 +82,6 @@ public class Main {
         }
     }
     public static void main(String[] args) throws IOException {
-//        MyScanner scanner = new MyScanner(new File("files/programs/p1.txt"));
-//        scanner.scan();
-//        scanner.changeProgram(new File("files/programs/p1err.txt"));
-//        scanner.scan();
-//        scanner.changeProgram(new File("files/programs/p2.txt"));
-//        scanner.scan();
-//        scanner.changeProgram(new File("files/programs/p3.txt"));
-//        scanner.scan();
-        finiteAutomataCases();
+        mainCases();
     }
 }

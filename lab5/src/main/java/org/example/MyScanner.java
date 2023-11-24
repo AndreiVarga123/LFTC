@@ -1,10 +1,11 @@
 package org.example;
 
+import org.apache.commons.io.FilenameUtils;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-import org.apache.commons.io.FilenameUtils;
 
 public class MyScanner {
 
@@ -20,6 +21,9 @@ public class MyScanner {
     private int index;
     private int currentLine;
 
+    private FiniteAutomata identifierFA;
+    private FiniteAutomata intConstantFA;
+
     public MyScanner(File programFileIn) throws IOException {
         symTable = new SymTable(50);
         separators = new ArrayList<>();
@@ -28,6 +32,10 @@ public class MyScanner {
         pif = new ArrayList<>();
         programFile = programFileIn;
         addTokens(new File("files/token.in"));
+        identifierFA = new FiniteAutomata();
+        intConstantFA = new FiniteAutomata();
+        identifierFA.readFile(new File("files/FA/identifier"));
+        intConstantFA.readFile(new File("files/FA/int_constant"));
     }
 
     private void addTokens(File tokenFile) throws IOException {
@@ -72,49 +80,101 @@ public class MyScanner {
     }
 
     public boolean intConstantCase() {
-        var intConstantRegex = Pattern.compile("^([+-]?[1-9][0-9]*|0)");
-        var matcher = intConstantRegex.matcher(line.substring(index));
+//        var intConstantRegex = Pattern.compile("^([+-]?[1-9][0-9]*|0)");
+//        var matcher = intConstantRegex.matcher(line.substring(index));
+//
+//        var invalidIntConstantRegex = Pattern.compile("([+-]?[1-9][0-9]*|0)[a-zA-Z_]+");
+//        if (!matcher.find() || invalidIntConstantRegex.matcher(line.substring(index)).find()) {
+//            return false;
+//        }
+//
+//        var intConstant = matcher.group(0);
+//        index += intConstant.length();
+//        symTable.addSymbol(intConstant);
+//        var position = symTable.getPosition(intConstant);
+//        pif.add(new Pair("int_constant", position));
+//        return true;
 
-        var invalidIntConstantRegex = Pattern.compile("([+-]?[1-9][0-9]*|0)[a-zA-Z_]+");
-        if (!matcher.find() || invalidIntConstantRegex.matcher(line.substring(index)).find()) {
-            return false;
+        StringBuilder intConstant = new StringBuilder();
+        ArrayList<String> alphabet = new ArrayList<>(List.of("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "+", "-"));
+        int i=index;
+        while (i < line.length() && alphabet.contains(String.valueOf(line.charAt(i)))) {
+            intConstant.append(line.charAt(i));
+            i++;
         }
 
-        var intConstant = matcher.group(0);
-        index += intConstant.length();
-        symTable.addSymbol(intConstant);
-        var position = symTable.getPosition(intConstant);
-        pif.add(new Pair("int_constant", position));
-        return true;
+        if (intConstantFA.isAccepted(String.valueOf(intConstant))) {
+            index = i;
+            symTable.addSymbol(intConstant.toString());
+            var position = symTable.getPosition(intConstant.toString());
+            pif.add(new Pair<>("intConstant", position));
+            return true;
+        }
+        return false;
     }
 
     public boolean identifierCase() {
-        var identifierRegex = Pattern.compile("^[a-zA-Z][a-zA-Z0-9_]*");
-        var matcher = identifierRegex.matcher(line.substring(index));
+//        var identifierRegex = Pattern.compile("^[a-zA-Z][a-zA-Z0-9_]*");
+//        var matcher = identifierRegex.matcher(line.substring(index));
+//
+//        if (!matcher.find()) {
+//            return false;
+//        }
+//
+//        var identifier = matcher.group(0);
+//
+//        if (keywords.contains(identifier) ) {
+//            return false;
+//        }
+//
+//        // see if it is already in the symbol table
+//        var position = symTable.getPosition(identifier);
+//        if (symTable.hasSymbol(identifier)) {
+//            index += identifier.length();
+//            pif.add(new Pair("id", position));
+//            return true;
+//        }
+//
+//        index += identifier.length();
+//        symTable.addSymbol(identifier);
+//        position = symTable.getPosition(identifier);
+//        pif.add(new Pair("id", position));
+//        return true;
 
-        if (!matcher.find()) {
-            return false;
+        StringBuilder identifier = new StringBuilder();
+        ArrayList<String> alphabet = new ArrayList<>(List.of("0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+                "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+                "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
+                "U", "V", "W", "X", "Y", "Z", "a", "b", "c", "d",
+                "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
+                "o", "p", "q", "r", "s", "t", "u", "v", "w", "x",
+                "y", "z", "_"));
+        int i = index;
+        while (i < line.length() && alphabet.contains(String.valueOf(line.charAt(i)))) {
+            identifier.append(line.charAt(i));
+            i++;
         }
 
-        var identifier = matcher.group(0);
+        if (identifierFA.isAccepted(String.valueOf(identifier))) {
 
-        if (keywords.contains(identifier) ) {
-            return false;
-        }
+            if (keywords.contains(identifier.toString()) ) {
+                return false;
+            }
 
-        // see if it is already in the symbol table
-        var position = symTable.getPosition(identifier);
-        if (symTable.hasSymbol(identifier)) {
-            index += identifier.length();
-            pif.add(new Pair("id", position));
+            var position = symTable.getPosition(String.valueOf(identifier));
+            if (symTable.hasSymbol(String.valueOf(identifier))) {
+
+                index = i;
+                pif.add(new Pair<>("id", position));
+                return true;
+            }
+            index = i;
+            symTable.addSymbol(String.valueOf(identifier));
+            position = symTable.getPosition(String.valueOf(identifier));
+            pif.add(new Pair<>("id", position));
             return true;
         }
-
-        index += identifier.length();
-        symTable.addSymbol(identifier);
-        position = symTable.getPosition(identifier);
-        pif.add(new Pair("id", position));
-        return true;
+        return false;
     }
 
     public boolean tokenCase() {

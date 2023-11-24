@@ -3,7 +3,6 @@ inceput
 intreg a,res;
 res = 1;
 citeste(a);
-Result = 3;
 
 cat_timp(a<=2){
 	res = res * a;
