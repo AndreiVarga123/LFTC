@@ -1,0 +1,144 @@
+~nonTerminals
+nonzerodigit digit digits integer letter symbol stringcharacter stringcharacters string liststmt mixedlist identifier lettersanddigits program type declaration listdeclaration cmpdstmt stmt simplstmt iostmt assignstmt value complexstmt ifstmt condition relation forstmt expression term factor operationpriority2 operationpriority1 listelement
+~terminals
+1 2 3 4 5 6 7 8 9 0 a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z ! @ # $  % ^ & * <- < > <<- ><- <-- [ ] + - / * ( ) ; '  for integer string list read println if then endif endfor else _ ,
+~startSymbol
+program
+~productions
+program -> # cmpdstmt #
+cmpdstmt -> stmt ;
+cmpdstmt -> stmt ; cmpdstmt
+stmt -> simplstmt
+stmt -> complexstmt
+simplstmt -> assignstmt
+simplstmt -> iostmt
+simplstmt -> declaration
+simplstmt -> listdeclaration
+complexstmt -> ifstmt
+complexstmt -> forstmt
+assignstmt -> identifier <- value
+iostmt -> read identifier
+iostmt -> println identifier
+iostmt -> println value
+declaration -> type identifier
+listdeclaration -> list [ digits ] identifier
+ifstmt -> if ( condition ) then cmpdstmt endif
+ifstmt -> if ( condition ) then cmpdstmt else cmpdstmt endif
+forstmt -> for ( declaration ; condition ;  expression ) cmpdstmt endfor
+liststmt  -> [ mixedlist ]
+mixedlist -> integer
+mixedlist -> string
+mixedlist -> integer , mixedlist
+mixedlist -> string , mixedlist
+identifier -> letter 
+identifier -> letter lettersanddigits
+lettersanddigits -> letter
+lettersanddigits -> digit
+lettersanddigits -> _
+lettersanddigits -> letter lettersanddigits
+lettersanddigits -> digit lettersanddigits
+lettersanddigits -> _ lettersanddigits
+nonzerodigit -> 1
+nonzerodigit -> 2
+nonzerodigit -> 3
+nonzerodigit -> 4
+nonzerodigit -> 5
+nonzerodigit -> 6
+nonzerodigit -> 7
+nonzerodigit -> 8
+nonzerodigit -> 9
+digit -> 0
+digit -> nonzerodigit
+letter -> A
+letter -> B
+letter -> C
+letter -> D
+letter -> E
+letter -> F
+letter -> G
+letter -> H
+letter -> I
+letter -> J
+letter -> K
+letter -> L
+letter -> M
+letter -> N
+letter -> O
+letter -> P
+letter -> Q
+letter -> R
+letter -> S
+letter -> T
+letter -> U
+letter -> V
+letter -> W
+letter -> X
+letter -> Y
+letter -> Z
+letter -> a
+letter -> b
+letter -> c
+letter -> d
+letter -> e
+letter -> f
+letter -> g
+letter -> h
+letter -> i
+letter -> j
+letter -> k
+letter -> l
+letter -> m
+letter -> n
+letter -> o
+letter -> p
+letter -> q
+letter -> r
+letter -> s
+letter -> t
+letter -> u
+letter -> v
+letter -> w
+letter -> x
+letter -> y
+letter -> z
+integer -> 0
+integer -> nonzerodigit digits
+digits -> digit
+digits -> digits digit
+symbol -> !
+symbol -> @
+symbol -> $
+symbol -> ^
+symbol -> &
+symbol -> *
+symbol -> %
+string -> ' stringcharacters '
+stringcharacters -> stringcharacter 
+stringcharacters -> stringcharacters stringcharacter
+stringcharacter -> letter
+stringcharacter -> digit
+stringcharacter -> symbol
+type -> integer
+type -> string
+factor -> ( expression ) 
+factor -> identifier
+factor -> value
+value -> string
+value -> listelement
+value -> integer
+listelement -> identifier [ integer ]
+operationpriority1 -> +
+operationpriority1 -> -
+operationpriority2 -> /
+operationpriority2 -> *
+expression -> term
+expression -> expression operationpriority2 term
+term -> term operationpriority2 factor
+term -> factor
+condition -> expression relation expression
+relation -> <
+relation -> <<-
+relation -> ><-
+relation -> <--
+relation -> >
+relation -> <-
