@@ -80,7 +80,7 @@ public class LL1 {
         for (String nonTerminal : grammar.getNonTerminals()) {
             follow.put(nonTerminal, new HashSet<>());
         }
-        //initialize starting nonTerminal with epsilon
+        // initialize starting nonTerminal with epsilon
         follow.get(grammar.getStartSymbol()).add("epsilon");
     }
 
