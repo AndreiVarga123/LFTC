@@ -123,4 +123,42 @@ public class Grammar {
         }
         return true;
     }
+
+    public List<String> getNonTerminals() {
+        return nonTerminals;
+    }
+
+    public List<String> getTerminals() {
+        return terminals;
+    }
+
+    public String getStartSymbol() {
+        return startSymbol;
+    }
+
+    public Map<String, List<List<String>>> getProductions() {
+        return productions;
+    }
+
+    public String getEpsilon() {
+        return epsilon;
+    }
+
+    public List<List<String>> getProductionForNonterminal(String nonterminal) {
+        return productions.get(nonterminal);
+    }
+
+    public Map<String, Set<List<String>>> getProductionsWithNonTerminalInRHS(String nonTerminal) {
+        var productionsWithNonTerminalInRHS = new HashMap<String, Set<List<String>>>();
+        productions.forEach((leftSideOfProduction, rightSideOfProduction)->{
+            for(var production : rightSideOfProduction) {
+                if(production.contains(nonTerminal)){
+                    if(!productionsWithNonTerminalInRHS.containsKey(leftSideOfProduction))
+                        productionsWithNonTerminalInRHS.put(leftSideOfProduction, new HashSet<>());
+                    productionsWithNonTerminalInRHS.get(leftSideOfProduction).add(production);
+                }
+            }
+        });
+        return productionsWithNonTerminalInRHS;
+    }
 }
