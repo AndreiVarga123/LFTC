@@ -46,12 +46,12 @@ public class Main {
                     else System.out.println("The given grammar is NOT a CFG");
                 }
                 case "7" -> {
-//                    if(fileRead && ll1.getFirstSet().size()==0)
-//                        ll1.FIRST();
-//                    ll1.printFirstSet();
+                    if(fileRead && ll1.getFirst().size()==0)
+                        ll1.FIRST();
+                    ll1.printFirstSet();
                 }
                 case "8" -> {
-                    if(fileRead && ll1.getFollowSet().size()==0)
+                    if(fileRead && ll1.getFollow().size()==0)
                         ll1.FOLLOW();
                     ll1.printFollowSet();
                 }

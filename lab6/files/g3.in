@@ -1,0 +1,15 @@
+~nonTerminals
+E EE T TT F
+~terminals
++ * id ( )
+~startSymbol
+E
+~productions
+E -> T EE
+EE -> + T EE
+EE -> epsilon
+T -> F TT
+TT -> * F TT
+TT -> epsilon
+F -> ( E )
+F -> id

@@ -13,12 +13,80 @@ public class LL1 {
         this.follow = new HashMap<>();
     }
 
-    public Map<String, Set<String>> getFirstSet() {
+    public Map<String, Set<String>> getFirst() {
         return first;
     }
 
-    public Map<String, Set<String>> getFollowSet() {
+    public Map<String, Set<String>> getFollow() {
         return follow;
+    }
+
+    public void FIRST() {
+        for (String nonTerminal : grammar.getNonTerminals()) {
+            first.put(nonTerminal, new HashSet<>());
+            List<List<String>> productionsForNonTerminal = grammar.getProductionForNonterminal(nonTerminal);
+            for (List<String> production : productionsForNonTerminal) {
+                if (grammar.getTerminals().contains(production.get(0)) || production.get(0).equals("epsilon"))
+                    first.get(nonTerminal).add(production.get(0));
+            }
+        }
+        boolean isChanged = true;
+        while (isChanged) {
+            isChanged = false;
+            Map<String, Set<String>> currentRow = new HashMap<>();
+            for (String nonTerminal : grammar.getNonTerminals()) {
+                List<List<String>> productionForNonTerminal = grammar.getProductionForNonterminal(nonTerminal);
+                Set<String> currentFirst = new HashSet<>(first.get(nonTerminal));
+                for(List<String> production: productionForNonTerminal){
+                    List<String> nonTerminals = new ArrayList<>();
+                    String terminal = null;
+                    for(String element: production){
+                        if(grammar.getNonTerminals().contains(element))
+                            nonTerminals.add(element);
+                        else
+                        {
+                            terminal = element;
+                            break;
+                        }
+                    }
+                    currentFirst.addAll(mergeSets(nonTerminals,terminal));
+                }
+                if(!currentFirst.equals(first.get(nonTerminal))){
+                    isChanged = true;
+                }
+                currentRow.put(nonTerminal,currentFirst);
+            }
+            first = currentRow;
+        }
+    }
+
+    public Set<String> mergeSets(List<String> nonTerminals, String terminal){
+        if(nonTerminals.size() < 1)
+            return new HashSet<>();
+        if(nonTerminals.size() == 1)
+            return first.get(nonTerminals.get(0));
+
+        Set<String> result = new HashSet<>();
+        int index = 0;
+        boolean allNonTerminalsContainEpsilon = true;
+
+        for(String nonTerminal : nonTerminals){
+            if(!first.get(nonTerminal).contains("epsilon"))
+                allNonTerminalsContainEpsilon = false;
+        }
+
+        if(allNonTerminalsContainEpsilon){
+            result.add(Objects.requireNonNullElse(terminal,"epsilon"));
+        }
+        while (index < nonTerminals.size()) {
+            boolean nonTerminalContainsEpsilon = false;
+            for (String element : first.get(nonTerminals.get(index)))
+                if (element.equals("epsilon")) nonTerminalContainsEpsilon = true;
+                else result.add(element);
+            if (nonTerminalContainsEpsilon) index++;
+            else break;
+        }
+        return result;
     }
 
 
@@ -80,7 +148,7 @@ public class LL1 {
         for (String nonTerminal : grammar.getNonTerminals()) {
             follow.put(nonTerminal, new HashSet<>());
         }
-        // initialize starting nonTerminal with epsilon
+        //initialize starting nonTerminal with epsilon
         follow.get(grammar.getStartSymbol()).add("epsilon");
     }
 
