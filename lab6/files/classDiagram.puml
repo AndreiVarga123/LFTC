@@ -1,0 +1,41 @@
+@startuml
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class node1 as "Grammar" {
+   nonTerminals: List<String>
+   terminals: List<String>
+   startSymbol: String
+   productions: Map<String, List<List<String>>>
+   epsilon: String
+
+   readFromFile(String filename): void
+   readProductions(BufferReader bufferedReader): void
+   printNonTerminals(): void
+   printTerminals(): void
+   printProductions(): void
+   printProductionsForNonTerminal(String nonTerminal): void
+   checkCFG(): boolean
+   getProductionsWithNonTerminal(String nonTerminal): List<List<String>>
+   getProductionsWithNonTerminalInRHS(String nonTerminal): Map<String, List<List<String>>>
+}
+
+class node2 as "SymTable" {
+   grammar: Grammar
+   first: Map<String,Set<String>>
+   follow: Map<String,Set<String>>
+
+   FIRST(): void
+   FOLLOW(): void
+   mergesets(List<String> nonTerminals, String terminal): Set<String>
+   initializeFollowSet(): void
+   printFirstSet(): void
+   printFollowSet(): void
+}
+
+
+
+node1 o-- node2
+
+@enduml
