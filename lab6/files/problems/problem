@@ -1,0 +1,23 @@
+#
+    int a;
+    a <- 2;
+    int b;
+    b <- 3;
+    int c;
+    c <- 1;
+    int max;
+    if (a > b) then
+        if (a > c) then
+            max <- a;
+        else
+            max <- c;
+        endif;
+    else
+        if (b > c) then
+            max <- b;
+        else
+            max <- c;
+        endif;
+    endif;
+    println max;
+#

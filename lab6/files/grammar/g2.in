@@ -1,0 +1,43 @@
+~nonTerminals
+program type declaration cmpdstmt stmt simplstmt iostmt assignstmt complexstmt ifstmt condition relation forstmt expression term factor sign signandnextexpr nextstmt
+~terminals
+<- < > <<- ><- <-- [ ] + - / * ( ) ; '  for intConstant id read println if then endif endfor else , # int
+~startSymbol
+program
+~productions
+program -> # cmpdstmt #
+cmpdstmt -> stmt ; nextstmt
+nextstmt -> cmpdstmt
+nextstmt -> epsilon
+stmt -> simplstmt
+stmt -> complexstmt
+simplstmt -> assignstmt
+simplstmt -> iostmt
+simplstmt -> declaration
+complexstmt -> ifstmt
+complexstmt -> forstmt
+assignstmt -> id <- expression
+iostmt -> read id
+iostmt -> println expression
+declaration -> type id
+ifstmt -> if ( condition ) then cmpdstmt else cmpdstmt endif
+forstmt -> for ( declaration ; condition ;  expression ) cmpdstmt endfor
+type -> int
+factor -> ( expression )
+factor -> expression
+expression -> term signandnextexpr
+signandnextexpr -> sign expression
+signandnextexpr -> epsilon
+term -> id
+term -> intConstant
+sign -> +
+sign -> -
+sign -> /
+sign -> *
+condition -> expression relation expression
+relation -> <
+relation -> <<-
+relation -> ><-
+relation -> <--
+relation -> >
+relation -> <-

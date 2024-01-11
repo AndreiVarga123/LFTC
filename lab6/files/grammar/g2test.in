@@ -1,0 +1,54 @@
+~nonTerminals
+liststmt mixedlist id program type declaration listdeclaration cmpdstmt stmt simplstmt iostmt assignstmt value complexstmt ifstmt condition relation forstmt expression term factor operationpriority2 operationpriority1 listelement
+~terminals
+ ! @ # $  % ^ & * <- < > <<- ><- <-- [ ] + - / * ( ) ; '  for integer string list read println if then endif endfor else ,
+~startSymbol
+program
+~productions
+program -> # cmpdstmt #
+cmpdstmt -> stmt ;
+cmpdstmt -> stmt ; cmpdstmt
+stmt -> simplstmt
+stmt -> complexstmt
+simplstmt -> assignstmt
+simplstmt -> iostmt
+simplstmt -> declaration
+simplstmt -> listdeclaration
+complexstmt -> ifstmt
+complexstmt -> forstmt
+assignstmt -> id <- value
+iostmt -> read id
+iostmt -> println id
+iostmt -> println value
+declaration -> type id
+listdeclaration -> list [ digits ] id
+ifstmt -> if ( condition ) then cmpdstmt endif
+ifstmt -> if ( condition ) then cmpdstmt else cmpdstmt endif
+forstmt -> for ( declaration ; condition ;  expression ) cmpdstmt endfor
+liststmt  -> [ mixedlist ]
+mixedlist -> integer
+mixedlist -> integer , mixedlist
+type -> integer
+type -> string
+factor -> ( expression )
+factor -> id
+factor -> value
+value -> string
+value -> listelement
+value -> integer
+listelement -> id [ integer ]
+operationpriority1 -> +
+operationpriority1 -> -
+operationpriority2 -> /
+operationpriority2 -> *
+expression -> term
+expression -> expression operationpriority2 term
+term -> term operationpriority2 factor
+term -> factor
+condition -> expression relation expression
+relation -> <
+relation -> <<-
+relation -> ><-
+relation -> <--
+relation -> >
+relation -> <-
